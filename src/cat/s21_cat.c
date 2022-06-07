@@ -8,13 +8,14 @@ int main(int argc, char **argv) {
                           .n = 0,
                           .s = 0,
                           .t = 0,
+                          .v = 0,
                           .number = 0,
                           .number_nonblank = 0,
                           .squeeze_blank = 0};
     int n = parse_flags(argc, argv, &opt);
     open_files(argc, argv, n, opt);
-    // print_opt(opt);
-    // print_args(argc, argv);
+    //print_opt(opt);
+    //print_args(argc, argv);
   }
   return ERROR;
 }
@@ -49,9 +50,11 @@ int parse_flags(int argc, char **argv, struct Options *opt) {
             break;
           case 't':
             opt->t = 1;
+            opt->v = 1;
             break;
           case 'e':
             opt->e = 1;
+            opt->v = 1;
             break;
           default:
             perror("Error2");
@@ -62,7 +65,7 @@ int parse_flags(int argc, char **argv, struct Options *opt) {
       break;
     }
   }
-  if (opt->b) opt->n = 0; 
+  if (opt->b) opt->n = 0;
   return n;  // 0 - if no files, else [index] there filenames starts
 }
 
@@ -122,9 +125,9 @@ void print_content(FILE *f, struct Options opt) {
 
 void print_opt(struct Options opt) {
   printf(
-      "b = %d\nn = %d\ns = %d\ne = %d\nt = %d\nnumber = %d\nnumber-nonblank = "
+      "b = %d\nn = %d\ns = %d\nv = %d\ne = %d\nt = %d\nnumber = %d\nnumber-nonblank = "
       "%d\nsqueeze-blank = %d\n",
-      opt.b, opt.n, opt.s, opt.e, opt.t, opt.number, opt.number_nonblank,
+      opt.b, opt.n, opt.s, opt.v, opt.e, opt.t, opt.number, opt.number_nonblank,
       opt.squeeze_blank);
 }
 

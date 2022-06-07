@@ -11,6 +11,7 @@ struct Options {
   int e;
   int t;
   int n;
+  int v;
   int number_nonblank;
   int number;
   int squeeze_blank;

@@ -12,9 +12,6 @@ struct Options {
   int t;
   int n;
   int v;
-  int number_nonblank;
-  int number;
-  int squeeze_blank;
 };
 
 void print_opt(struct Options opt);

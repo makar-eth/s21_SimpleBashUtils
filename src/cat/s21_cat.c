@@ -9,9 +9,7 @@ int main(int argc, char **argv) {
                           .s = 0,
                           .t = 0,
                           .v = 0,
-                          .number = 0,
-                          .number_nonblank = 0,
-                          .squeeze_blank = 0};
+    };
     int n = parse_flags(argc, argv, &opt);
     open_files(argc, argv, n, opt);
     //print_opt(opt);
@@ -25,13 +23,13 @@ int parse_flags(int argc, char **argv, struct Options *opt) {
   for (int k = 1; k < argc; k++) {
     if (argv[k][0] == '-' && argv[k][1] == '-') {
       if (!strcmp(argv[k], "--number-nonblank")) {
-        opt->number_nonblank = 1;
+        opt->b = 1;
         argv[k] = "\0";
       } else if (!strcmp(argv[k], "--number")) {
-        opt->number = 1;
+        opt->n = 1;
         argv[k] = "\0";
       } else if (!strcmp(argv[k], "--squeeze-blank")) {
-        opt->squeeze_blank = 1;
+        opt->s = 1;
         argv[k] = "\0";
       } else {
         perror("Error1");
@@ -55,6 +53,12 @@ int parse_flags(int argc, char **argv, struct Options *opt) {
           case 'e':
             opt->e = 1;
             opt->v = 1;
+            break;
+          case 'E':
+            opt->e = 1;
+            break;
+          case 'T':
+            opt->t = 1;
             break;
           default:
             perror("Error2");
@@ -127,8 +131,7 @@ void print_opt(struct Options opt) {
   printf(
       "b = %d\nn = %d\ns = %d\nv = %d\ne = %d\nt = %d\nnumber = %d\nnumber-nonblank = "
       "%d\nsqueeze-blank = %d\n",
-      opt.b, opt.n, opt.s, opt.v, opt.e, opt.t, opt.number, opt.number_nonblank,
-      opt.squeeze_blank);
+      opt.b, opt.n, opt.s, opt.v, opt.e, opt.t);
 }
 
 void print_args(int argc, char **argv) {

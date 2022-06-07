@@ -113,11 +113,7 @@ void print_content(FILE *f, struct Options opt) {
       }
       flag = 0;
       printf("%c", print);
-      if (opt.b && print == '\n' && future != '\n') {
-        line++;
-        printf("%6d\t", line);
-      }
-      if (opt.n && print == '\n') {
+      if ((opt.b && print == '\n' && future != '\n') || (opt.n && print == '\n')) {
         line++;
         printf("%6d\t", line);
       }

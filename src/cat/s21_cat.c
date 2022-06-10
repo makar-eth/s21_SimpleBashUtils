@@ -125,8 +125,7 @@ void print_content(FILE *f, struct Options opt) {
 
 void print_opt(struct Options opt) {
   printf(
-      "b = %d\nn = %d\ns = %d\nv = %d\ne = %d\nt = %d\nnumber = %d\nnumber-nonblank = "
-      "%d\nsqueeze-blank = %d\n",
+      "b = %d\nn = %d\ns = %d\nv = %d\ne = %d\nt = %d\n",
       opt.b, opt.n, opt.s, opt.v, opt.e, opt.t);
 }
 

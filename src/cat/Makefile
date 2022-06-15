@@ -1,7 +1,7 @@
-$(CC)=gcc
-$(CFLAGS)=-Wall -Werror -Wextra
-$(RM)=rm -rf
-$(TARGET)=s21_cat
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra
+RM = rm -rf
+TARGET = s21_cat
 
 all: build
 
@@ -14,4 +14,4 @@ build: s21_cat.o
 clean:
 	$(RM) *.o
 
-.PHONY: all build clear
+.PHONY: all build clean

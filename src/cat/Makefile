@@ -6,12 +6,12 @@ TARGET = s21_cat
 all: build
 
 build: s21_cat.o
-	$(CC) $(CFLAGS) $^ -o $(TARGET)
+	$(CC) $(CFLAGS) $^ -o $(TARGET) 
 
 %.o: %.c
-	$(CC) $< -o $@
+	$(CC) -c $< -o $@
 
 clean:
-	$(RM) *.o
+	$(RM) *.o *.txt $(TARGET)
 
 .PHONY: all build clean

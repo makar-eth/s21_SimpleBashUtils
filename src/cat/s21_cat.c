@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
     //print_opt(opt);
     //print_args(argc, argv);
   }
-  return ERROR;
+  return 0;
 }
 
 int parse_flags(int argc, char **argv, struct Options *opt) {
@@ -112,7 +112,13 @@ void print_content(FILE *f, struct Options opt) {
           }
       }
       flag = 0;
-      printf("%c", print);
+      if (opt.v && (0 <= (int)print < 32)) {
+        printf("^%c", (int)print + 32);
+      } else if (opt.t && print == '\t') {
+        printf("^I");
+      } else {
+        printf("%c", print);
+      }
       if ((opt.b && print == '\n' && future != '\n') || (opt.n && print == '\n')) {
         line++;
         printf("%6d\t", line);
@@ -125,8 +131,7 @@ void print_content(FILE *f, struct Options opt) {
 
 void print_opt(struct Options opt) {
   printf(
-      "b = %d\nn = %d\ns = %d\nv = %d\ne = %d\nt = %d\nnumber = %d\nnumber-nonblank = "
-      "%d\nsqueeze-blank = %d\n",
+      "b = %d\nn = %d\ns = %d\nv = %d\ne = %d\nt = %d\n",
       opt.b, opt.n, opt.s, opt.v, opt.e, opt.t);
 }
 

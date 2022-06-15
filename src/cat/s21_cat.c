@@ -1,7 +1,6 @@
 #include "s21_cat.h"
 
 int main(int argc, char **argv) {
-  // print_args(argc, argv);
   if (argc > 1) {
     struct Options opt = {.b = 0,
                           .e = 0,
@@ -12,8 +11,6 @@ int main(int argc, char **argv) {
     };
     int n = parse_flags(argc, argv, &opt);
     open_files(argc, argv, n, opt);
-    //print_opt(opt);
-    //print_args(argc, argv);
   }
   return 0;
 }

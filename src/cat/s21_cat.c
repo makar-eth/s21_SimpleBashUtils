@@ -80,14 +80,18 @@ int parse_flags(int argc, char **argv, struct Options *opt, int *error) {
 
 void open_files(int argc, char **argv, int n, struct Options opt) {
   FILE *f;
+  int flag = 0;
   while (n < argc) {
     f = fopen(argv[n], "r");
     if (f == NULL) {
       fprintf(stderr, "s21_cat: %s: No such file or directory\n", argv[n]);
+      break;
     } else {
       print_content(f, opt);
+      flag = 1;
       fclose(f);
     }
+    if (flag == 1) printf("\t");
     n++;
   }
 }

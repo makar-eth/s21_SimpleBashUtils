@@ -1,6 +1,7 @@
 #include "s21_cat.h"
 
 int main(int argc, char **argv) {
+  int error = 0;
   if (argc > 1) {
     struct Options opt = {.b = 0,
                           .e = 0,
@@ -9,13 +10,15 @@ int main(int argc, char **argv) {
                           .t = 0,
                           .v = 0,
     };
-    int n = parse_flags(argc, argv, &opt);
-    open_files(argc, argv, n, opt);
+    int n = parse_flags(argc, argv, &opt, &error);
+    if (!error) {
+      open_files(argc, argv, n, opt);
+    }
   }
-  return 0;
+  return error;
 }
 
-int parse_flags(int argc, char **argv, struct Options *opt) {
+int parse_flags(int argc, char **argv, struct Options *opt, int *error) {
   int n = 0;
   for (int k = 1; k < argc; k++) {
     if (argv[k][0] == '-' && argv[k][1] == '-') {
@@ -29,7 +32,8 @@ int parse_flags(int argc, char **argv, struct Options *opt) {
         opt->s = 1;
         argv[k] = "\0";
       } else {
-        perror("Error1");
+        *error = 1;
+        fprintf(stderr, "s21_cat: illegal option -- -\nusage: s21_cat [-benstuv] [file ...]\n");
       }
     } else if (argv[k][0] == '-') {
       for (int i = 1; i < strlen(argv[k]); i++) {
@@ -61,7 +65,8 @@ int parse_flags(int argc, char **argv, struct Options *opt) {
             opt->t = 1;
             break;
           default:
-            perror("Error2");
+            *error = 1;
+            fprintf(stderr, "cat: illegal option -- %c\nusage: cat [-benstuv] [file ...]\n", argv[k][i]);
         }
       }
     } else {
@@ -78,9 +83,7 @@ void open_files(int argc, char **argv, int n, struct Options opt) {
   while (n < argc) {
     f = fopen(argv[n], "r");
     if (f == NULL) {
-      char str[150] = "";
-      sprintf(str, "s21_cat: %s", argv[n]);
-      perror(str);
+      fprintf(stderr, "s21_cat: %s: No such file or directory\n", argv[n]);
     } else {
       print_content(f, opt);
       fclose(f);

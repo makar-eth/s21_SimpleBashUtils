@@ -81,6 +81,7 @@ int parse_flags(int argc, char **argv, struct Options *opt, int *error) {
 void open_files(int argc, char **argv, int n, struct Options opt) {
   FILE *f;
   int flag = 0;
+  if (flag == 1) printf("\t");
   while (n < argc) {
     f = fopen(argv[n], "r");
     if (f == NULL) {
@@ -91,7 +92,6 @@ void open_files(int argc, char **argv, int n, struct Options opt) {
       flag = 1;
       fclose(f);
     }
-    if (flag == 1) printf("\t");
     n++;
   }
 }
@@ -128,8 +128,8 @@ void print_content(FILE *f, struct Options opt) {
       } else {
         printf("%c", print);
       }
-      if ((opt.b && print == '\n' && future != '\n') || (opt.n && print == '\n')) {
-        line++;
+      if ((opt.b && print == '\n' && future != '\n') || (opt.n && print == '\n') && future != EOF) {
+        if (line != 1) line++;
         printf("%6d\t", line);
       }
       if (opt.e && future == '\n') printf("$");

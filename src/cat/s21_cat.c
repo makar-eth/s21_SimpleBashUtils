@@ -43,13 +43,16 @@ int parse_flags(int argc, char **argv, struct Options *opt) {
           case 's':
             opt->s = 1;
             break;
+          case 'v':
+            opt->v = 1;
+            break;
           case 't':
             opt->t = 1;
-            // opt->v = 1;
+            opt->v = 1;
             break;
           case 'e':
             opt->e = 1;
-            // opt->v = 1;
+            opt->v = 1;
             break;
           case 'E':
             opt->e = 1;
@@ -109,8 +112,10 @@ void print_content(FILE *f, struct Options opt) {
           }
       }
       flag = 0;
-      if (opt.v && (0 <= (int)print) && ((int)print < 32)) {
-        printf("^%c", (int)print + 32);
+      if (opt.v && (0 <= (int)print) && ((int)print < 32) && print != '\n'&& print != '\t') {
+        printf("^%c", (int)print + 64);
+      } else if ((int)print == 127 && opt.v) {
+        printf("^%c", (int)print - 64);
       } else if (opt.t && print == '\t') {
         printf("^I");
       } else {
